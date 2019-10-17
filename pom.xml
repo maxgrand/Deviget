@@ -87,7 +87,7 @@
                         </goals>
                         <configuration>
                             <url>
-                                https://chromedriver.storage.googleapis.com/2.9/chromedriver_win32.zip
+                                https://chromedriver.storage.googleapis.com/77.0.3865.40/chromedriver_win32.zip
                             </url>
                             <unpack>true</unpack>
                             <outputDirectory>${basedir}/src/main/resources/chromedriver_win32</outputDirectory>
@@ -101,7 +101,7 @@
                         </goals>
                         <configuration>
                             <url>
-                                https://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip
+                                https://chromedriver.storage.googleapis.com/77.0.3865.40/chromedriver_linux64.zip
                             </url>
                             <unpack>true</unpack>
                             <outputDirectory>${basedir}/src/main/resources/chromedriver_linux64</outputDirectory>
