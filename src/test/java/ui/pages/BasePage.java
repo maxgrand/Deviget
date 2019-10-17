@@ -1,5 +1,6 @@
 package ui.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,7 +22,7 @@ public class BasePage {
 
     //region protected methods
 
-    protected void goToHomePage(String url, int waitPeriod, WebElement...element) {
+    void goToHomePage(String url, int waitPeriod, WebElement... element) {
         driver.navigate().to(url);
 
         if(element.length > 0){
@@ -29,9 +30,28 @@ public class BasePage {
         }
     }
 
-    //endregion
+    void clickElement(WebElement element) {
+        elementWait.until(ExpectedConditions.visibilityOf(element));
+        elementWait.until(ExpectedConditions.elementToBeClickable(element));
+        element.click();
+    }
 
-    //region private methods
+    void sendKeys(WebElement element, String keys)
+    {
+        elementWait.until(ExpectedConditions.visibilityOf(element));
+
+        if(element.isEnabled() && element.isDisplayed()){
+            element.sendKeys(keys);
+        }
+    }
+
+    WebElement FirstChild(WebElement element){
+        return element.findElements(By.xpath(".//*")).get(0);
+    }
+
+    void scrollTo(WebElement element){
+        jsExecutor.executeScript("arguments[0].scrollIntoView(true);", element);
+    }
 
     private void waitLoader(WebElement element, int timeOut)
     {

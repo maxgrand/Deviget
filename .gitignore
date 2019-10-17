@@ -1,7 +1,7 @@
 # Don't track content of these folders
 target/
 .idea/
-main/resources/
+src/main/resources/
 
 # Compiled class file
 *.class

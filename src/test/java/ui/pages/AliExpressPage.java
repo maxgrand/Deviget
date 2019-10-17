@@ -1,5 +1,6 @@
 package ui.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -62,4 +63,69 @@ public class AliExpressPage extends BasePage{
         PageFactory.initElements(driver,this);
         this.goToHomePage(this.url,0);
     }
+
+    //region page behaviour methods
+
+    public void goToPromotion(String promotionType){
+        this.clickElement(popUpCloseButton);
+        WebElement chosenPromotion = null;
+
+        switch (promotionType.toLowerCase()){
+            default:
+                chosenPromotion = this.huaweiPriceFallPromotion;
+        }
+
+        for (WebElement slide : navigationSlider.findElements(By.xpath("//span[@data-role='navButton']"))){
+            if(chosenPromotion.isDisplayed()){
+                this.url = this.FirstChild(chosenPromotion).getAttribute("href");
+                this.goToHomePage(this.url,0);
+                break;
+            }else {
+                slide.click();
+            }
+        }
+    }
+
+    public void selectSecondProduct(){
+        WebElement buyButton = this.huaweiResultPageDivContainer.get(1).findElement(By.className("shop"));
+        this.clickElement(buyButton);
+    }
+
+    public void buyProduct(String...shippingCountry){
+        this.clickElement(huaweiCellphoneOption);
+
+        this.scrollTo(buyNowButton);
+
+        if(this.unavailableDeliveryAlertIcon.isDisplayed()){
+            if(shippingCountry.length > 0){
+                this.changeShipping(shippingCountry[0]);
+            }else{
+                throw new IllegalArgumentException("Native country is un-available for shipping");
+            }
+        }
+
+        this.clickElement(buyNowButton);
+    }
+
+    //region validations and private methods
+
+    public String verifyUrl() {
+        return this.driver.getCurrentUrl();
+    }
+
+    public boolean verifyLoginIsPresent(){
+        return this.loginPopUp.isDisplayed();
+    }
+
+    private void changeShipping(String shippingCountry) {
+        this.clickElement(shippingPopUpButton);
+        this.clickElement(this.shippingDropdown);
+        this.sendKeys(this.shippingAutoCompleteInput, shippingCountry);
+        this.clickElement(this.chosenCountry);
+        this.clickElement(shippingApplyNowButton);
+    }
+
+    //endregion
+
+    //endregion
 }
